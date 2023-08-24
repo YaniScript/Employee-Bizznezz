@@ -1,17 +1,15 @@
-// Connecting to Sequelize and requiring Dotenv
-const Sequelize = require('sequelize');
-require('dotenv').config();
+const mysql = require('mysql2');
 
-const sequelize = new Sequelize(
-  process.env.DB_NAME,
-  process.env.DB_USER,
-  process.env.DB_PASSWORD,
-{
-    host: 'localhost',
-    dialect: 'mysql',
-    port: 3306
-}
-);
+// create the connection to database
+const connection = mysql.createConnection({
+  host: 'localhost',
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME
+});
 
+connection.connect(function (err) {
+  if (err) throw err;
+});
 
-module.exports = sequelize;
+module.exports = connection;
