@@ -11,15 +11,15 @@ USE employee_db;
 CREATE TABLE department (
     id INT NOT NULL PRIMARY KEY,
     dept_name VARCHAR(30) NOT NULL
-),
+);
 
 -- Creating a 'Role' table in the Employee Database
 CREATE TABLE role (
-    id INT NOT NULL PRIMARY KEY
+    id INT NOT NULL PRIMARY KEY,
     role_title VARCHAR(30) NOT NULL,
     salary DECIMAL NOT NULL,
     dept_id INT NOT NULL FOREIGN KEY
-),
+);
 
 -- Creating an 'Employee Information' table in the Employee Database
 CREATE TABLE employee_information (
@@ -28,4 +28,4 @@ CREATE TABLE employee_information (
     last_name VARCHAR(30) NOT NULL,
     role_id INT NOT NULL FOREIGN KEY, 
     manager_id VARCHAR(30) FOREIGN KEY
-)
+);

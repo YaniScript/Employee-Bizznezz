@@ -1,6 +1,7 @@
-// inquirer prompts
-// Inquirer File -- (used to be called Actions)
+// Prompts using Inquirer
 const inquirer = require('inquirer');
+
+
 
 inquirer
     .prompt([
@@ -12,7 +13,10 @@ inquirer
                 'Add Role',
                 'Add Employee',
                 'Update Employee Manager',
-                'Update Employee Role'
+                'Update Employee Role',
+                'View all Departments',
+                'View all Roles',
+                'View all Employees',
             ],
             name: 'table_options'
          },
