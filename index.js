@@ -32,96 +32,57 @@ const mainPrompt = () => {
                 {
                     name: "View Employees",
                     value: "viewEmployee"
-                },
-                {
-                    name: "Update Employee Manager",
-                    value: "manager"
-                },
-                {
-                    name: "Update Employee Role",
-                    value: "employeeRole"
                 }
             ]
         }
-    ])
+    ]).then(answers => {
+        switch (options) {
+            case 'department':
+                addDepartment();
+                break;
+            case 'role':
+                addRole();
+                break;
+            case 'employee':
+                addEmployee();
+                break;
+            case 'viewDept':
+                viewDept();
+                break;
+            case 'viewRole':
+                viewRole();
+            case 'viewEmployee':
+                viewEmployee();
+                break;
+            default:
+                console.log(`Unknown option: ${answers.options}`);
+        }
+    });
 }
-
-//Is my switch statement set up correctly?
-
-switch (options) {
-    case 'department':
-        return db.promise().query('INSERT INTO department');
-    case 'role':
-        return db.promise().query('INSERT INTO role');
-    case 'employee':
-        return db.promise().query('INSERT INTO employee');
-    case 'viewDept':
-        return db.promise().query('SELECT * FROM department');
-    case 'viewRole':
-        return db.promise().query('SELECT * FROM role');
-    case 'viewEmployee':
-        return db.promise().query('SELECT * FROM employee');
-}
-
-
-
-
-//Do I need to create functions for how to add into the tables?
-
-
-
 
 const addDepartment = () => {
-    return db.promise().query('INSERT INTO department');
-}
+    inquirer.prompt ([
+        {
+            type: 'input',
+            name: 'departmentName',
+            message: 'Enter the name of the department:',
+            validate: input => input ? true : 'The department name cannot be empty!'
+        }
+    ]).then(answers => {
+        const deptSQL = 'INSERT INTO department VALUES (dept_name)';
 
-const addRole = () => {
-    return db.promise().query('INSERT INTO role');
-}
-
-const addEmployee = () => {
-    return db.promise().query('INSERT INTO employee');
-}
-
-const viewDepartment = () => {
-    return db.promise().query('SELECT * FROM department');
-}
-
-const viewRoles = () => {
-    return db.promise().query('SELECT * FROM role');
-}
-
-const viewEmployees = () => {
-    return db.promise().query('SELECT * FROM employee')
+        db.promise().query(sql, [answers.departmentName])
+        .then(() => {
+            console.log(`Added ${answers.departmentName} to departments.`);
+        })
+        mainPrompt();
+    })
+    .catch(err => {console.log(error)
+    });
 }
 
 
 
-//How do I get these prompts working if a user does select Add _____?
-
-
-// const prompt = () => {
-//     inquirer.prompt ([
-//         {
-//             type: 'list',
-//             name: 'option',
-//             message: 'What do you want to do?',
-//             choices: [
-//                 {
-//                     name: "View All",
-//                     value: "View"
-//                 },
-//                 {
-//                     name: "Create New",
-//                     value: "Create"
-//                 },
-//                 {
-//                     name: "Exit App",
-//                     value: "Exit"
-//                 }
-//             ]
-//         }
-//     ])
 //     .then((data) => console.log(data))
 //     .catch((err) => console.log(error))
 // }
